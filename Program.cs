@@ -319,8 +319,11 @@ do
                 }
             }
 
-            //Console.WriteLine("All animals have a valid age.");
 
+            //Console.WriteLine("All animals have a valid age.");
+            Console.WriteLine();
+            Console.WriteLine("Age and physical descriptions are complete for all our friends :)");
+            Console.WriteLine();
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
