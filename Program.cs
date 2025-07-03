@@ -81,6 +81,7 @@ do
     Console.WriteLine("Welcome to the Contoso PetFriends app. Your main menu options are:");
     Console.WriteLine(" 1. List all of our current pet information");
     Console.WriteLine(" 2. Add a new animal friend to the ourAnimals array");
+    Console.WriteLine(" 3. Ensure animal ages and physical descriptions are complete");
     Console.WriteLine();
     Console.WriteLine("Enter your selection number (or type Exit to exit the program)");
 
@@ -250,6 +251,78 @@ do
 
 
 
+            break;
+        case "3":
+            for (int i = 0; i < maxPets; i++)
+            {
+                // Skip if ID is blank
+                if (ourAnimals[i, 0] == "ID #: ")
+                {
+                    continue;
+                }
+
+                // Verify pet age
+                if (ourAnimals[i, 2] == "Age: ?")
+                {
+                    bool validEntry = false;
+                    do
+                    {
+                        int petAge;
+
+                        Console.WriteLine($"Missing Pet Age for {ourAnimals[i, 0]}, please enter.");
+                        readResult = Console.ReadLine();
+                        if (readResult != null)
+                        {
+                            animalAge = readResult;
+
+                            if (ourAnimals[i, 2] == "Age: ?")
+                            {
+                                validEntry = int.TryParse(animalAge, out petAge);
+                            }
+                            else
+                            {
+                                validEntry = true;
+                            }
+                        }
+                    } while (validEntry == false);
+
+                    ourAnimals[i, 2] = "Age: " + animalAge;
+                }
+
+                // Verify pet physical description
+                if (ourAnimals[i, 4] == "Physical description: " || ourAnimals[i, 4] == "Physical description: tbd")
+                {
+                    bool validEntry = false;
+                    do
+                    {
+
+                        Console.WriteLine($"Missing physical description for {ourAnimals[i, 0]}. Specify (size, color, breed, gender, weight, housebroken)");
+                        readResult = Console.ReadLine();
+
+                        if (readResult != null)
+                        {
+                            animalPhysicalDescription = readResult;
+
+                            if (animalPhysicalDescription.Length == 0)
+                            {
+                                validEntry = false;
+                                Console.WriteLine("Cannot enter nothing.");
+                            }
+                            else
+                            {
+                                validEntry = true;
+                            }
+                        }
+                    } while (validEntry == false);
+
+                    ourAnimals[i, 4] = "Physical description: " + animalPhysicalDescription;
+                }
+            }
+
+            //Console.WriteLine("All animals have a valid age.");
+
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
             break;
         default:
             break;
