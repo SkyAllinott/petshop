@@ -650,6 +650,55 @@ do
             break;
         case "7":
             // Display all pets of certian species and physical description
+            bool speciesValid = false;
+            string speciesFilter = "";
+
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Select the species you want to filter by (cat/dog):");
+                readResult = Console.ReadLine();
+
+                if (readResult != null)
+                {
+                    speciesFilter = readResult.ToLower();
+                    if (speciesFilter != "dog" && speciesFilter != "cat")
+                    {
+                        Console.WriteLine("Must select one of 'cat' or 'dog'");
+                    }
+                    else
+                    {
+                        speciesValid = true;
+                    }
+                }
+            } while (!speciesValid);
+
+            Console.WriteLine();
+            Console.Clear();
+            Console.WriteLine($"Listing all {speciesFilter}s:");
+            Console.WriteLine();
+
+            bool anyFound = false;
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0] != "ID #: " && ourAnimals[i, 1] == "Species: " + speciesFilter)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        Console.WriteLine(ourAnimals[i, j]);
+                    }
+                    Console.WriteLine();
+                    anyFound = true;
+                }
+            }
+
+            if (!anyFound)
+            {
+                Console.WriteLine($"No {speciesFilter}s found.");
+            }
+
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
             break;
         default:
             break;
