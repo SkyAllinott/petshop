@@ -153,7 +153,7 @@ do
 
                         validEntry = (animalSpecies != "dog" && animalSpecies != "cat" ? false : true);
                     }
-                } while (validEntry == false);
+                } while (!validEntry);
 
                 animalID = animalSpecies.Substring(0, 1) + (petCount + 1).ToString();
 
@@ -176,7 +176,7 @@ do
                             validEntry = true;
                         }
                     }
-                } while (validEntry == false);
+                } while (!validEntry);
 
                 do
                 {
@@ -288,7 +288,7 @@ do
                                 validEntry = true;
                             }
                         }
-                    } while (validEntry == false);
+                    } while (!validEntry);
 
                     ourAnimals[i, 2] = "Age: " + animalAge;
                 }
@@ -317,7 +317,7 @@ do
                                 validEntry = true;
                             }
                         }
-                    } while (validEntry == false);
+                    } while (!validEntry);
 
                     ourAnimals[i, 4] = "Physical description: " + animalPhysicalDescription;
                 }
@@ -363,7 +363,7 @@ do
                                 validEntry = true;
                             }
                         }
-                    } while (validEntry == false);
+                    } while (!validEntry);
 
                     ourAnimals[i, 3] = "Nickname: " + animalNickname;
                 }
@@ -393,7 +393,7 @@ do
                                 validEntry = true;
                             }
                         }
-                    } while (validEntry == false);
+                    } while (!validEntry);
 
                     ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
                 }
@@ -454,7 +454,7 @@ do
 
                             ourAnimals[i, 2] = "Age: " + animalAge;
                         }
-                    } while (validEntry == false);
+                    } while (!validEntry);
                 }
             }
             Console.WriteLine();
@@ -529,11 +529,127 @@ do
             break;
         case "6":
             // Edit animals personality description
+            for (int i = 0; i < maxPets; i++)
+            {
+                // Skip if ID is blank
+                if (ourAnimals[i, 0] == "ID #: ")
+                {
+                    continue;
+                }
+
+                if (ourAnimals[i, 5] == "Personality: ")
+                {
+                    bool validEntry = false;
+
+                    do
+                    {
+                        Console.WriteLine($"No personality for {(ourAnimals[i, 0])}. Do you want to add their personality? y/n");
+
+                        readResult = Console.ReadLine();
+                        if (readResult != null)
+                        {
+                            menuSelection = readResult;
+                            if (menuSelection == "n")
+                            {
+                                validEntry = true;
+                                continue;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Input personality details (energy, cuddliness, etc.).");
+
+                                readResult = Console.ReadLine();
+                                if (readResult != null)
+                                {
+                                    animalPersonalityDescription = readResult;
+
+                                    if (animalPersonalityDescription.Length == 0)
+                                    {
+                                        Console.WriteLine("Personality can't be empty.");
+                                    }
+                                    else
+                                    {
+                                        validEntry = true;
+                                        ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
+                                    }
+                                }
+                            }
+                        }
+                    } while (!validEntry);
+                }
+            }
+
+            Console.WriteLine();
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0] == "ID #: ")
+                {
+                    continue;
+                }
+                Console.WriteLine($"{(i + 1)}: {ourAnimals[i, 3]}. {ourAnimals[i, 5]}");
+            }
+            Console.WriteLine();
+            
+            
+            int selectedRow6 = -1;
+            bool rowSelectionValid6 = false;
+
+            do
+            {
+                Console.WriteLine("Enter the row number of the animal whose personality you wish to edit:");
+                readResult = Console.ReadLine();
+
+                if (readResult != null && int.TryParse(readResult, out selectedRow6))
+                {
+                    if (selectedRow6 >= 1 && selectedRow6 <= maxPets && ourAnimals[selectedRow6 - 1, 0] != "ID #: ")
+                    {
+                        Console.WriteLine($"You selected row #{selectedRow6}: {ourAnimals[selectedRow6 - 1, 3]}");
+                        rowSelectionValid6 = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid selection. Please enter a valid row number.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a numeric value.");
+                }
+            } while (!rowSelectionValid6);
+
+            bool personalityEntryValid = false;
+            string newPersonality = "";
+
+            do
+            {
+                Console.WriteLine("Enter the new personality (or '?' if unknown):");
+                readResult = Console.ReadLine();
+
+                if (readResult != null)
+                {
+                    newPersonality = readResult;
+                    if (newPersonality == "?")
+                    {
+                        personalityEntryValid = true;
+                    }
+                    else if (newPersonality.Length == 0)
+                    {
+                        Console.WriteLine("Must enter personality details.");
+                    }
+                    else
+                    {
+                        personalityEntryValid = true;
+                    }
+                }
+            } while (!personalityEntryValid);
+
+            // Update the personality
+            ourAnimals[selectedRow6 - 1, 5] = "Personality: " + newPersonality;
+            Console.WriteLine("Personality updated successfully! Press Enter to continue.");
+            Console.ReadLine();
             break;
         case "7":
             // Display all pets of certian species and physical description
-            break;
-        case "8":
             break;
         default:
             break;
