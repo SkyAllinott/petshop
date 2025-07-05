@@ -82,6 +82,10 @@ do
     Console.WriteLine(" 1. List all of our current pet information");
     Console.WriteLine(" 2. Add a new animal friend to the ourAnimals array");
     Console.WriteLine(" 3. Ensure animal ages and physical descriptions are complete");
+    Console.WriteLine(" 4. Ensure animal nicknames and personality descriptions are complete");
+    Console.WriteLine(" 5. Edit an animal’s age");
+    Console.WriteLine(" 6. Edit an animal’s personality description");
+    Console.WriteLine(" 7. Display all pets of a certain species and physical description");
     Console.WriteLine();
     Console.WriteLine("Enter your selection number (or type Exit to exit the program)");
 
@@ -320,12 +324,148 @@ do
             }
 
 
-            //Console.WriteLine("All animals have a valid age.");
             Console.WriteLine();
             Console.WriteLine("Age and physical descriptions are complete for all our friends :)");
             Console.WriteLine();
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
+            break;
+        case "4":
+            // Add menu to verify pet nickname and personality description, same as above essentially.
+            for (int i = 0; i < maxPets; i++)
+            {
+                // Skip if ID is blank
+                if (ourAnimals[i, 0] == "ID #: ")
+                {
+                    continue;
+                }
+                // Verify nickname
+                if (ourAnimals[i, 3] == "Nickname: " || ourAnimals[i, 3] == "Nickname: tbd")
+                {
+                    bool validEntry = false;
+                    do
+                    {
+
+                        Console.WriteLine($"Missing nickname for {ourAnimals[i, 0]}. What should we call them? :)");
+                        readResult = Console.ReadLine();
+
+                        if (readResult != null)
+                        {
+                            animalNickname = readResult;
+
+                            if (animalNickname.Length == 0)
+                            {
+                                validEntry = false;
+                                Console.WriteLine("Cannot enter nothing.");
+                            }
+                            else
+                            {
+                                validEntry = true;
+                            }
+                        }
+                    } while (validEntry == false);
+
+                    ourAnimals[i, 3] = "Nickname: " + animalNickname;
+                }
+
+
+                // Verify pet personality description
+                if (ourAnimals[i, 5] == "Personality: " || ourAnimals[i, 5] == "Personality: tbd")
+                {
+                    bool validEntry = false;
+                    do
+                    {
+
+                        Console.WriteLine($"Missing personality description for {ourAnimals[i, 3]}. Specify (energy, friendliness, etc.)");
+                        readResult = Console.ReadLine();
+
+                        if (readResult != null)
+                        {
+                            animalPersonalityDescription = readResult;
+
+                            if (animalPersonalityDescription.Length == 0)
+                            {
+                                validEntry = false;
+                                Console.WriteLine("Cannot enter nothing.");
+                            }
+                            else
+                            {
+                                validEntry = true;
+                            }
+                        }
+                    } while (validEntry == false);
+
+                    ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("Nickname and personality descriptions are complete for all our friends :)");
+            Console.WriteLine();
+            Console.WriteLine("Press the Enter key to continue.");
+            readResult = Console.ReadLine();
+            break;
+
+        case "5":
+            // Edit animals age
+            for (int i = 0; i < maxPets; i++)
+            {
+                // Skip if ID is blank
+                if (ourAnimals[i, 0] == "ID #: ")
+                {
+                    continue;
+                }
+
+                if (ourAnimals[i, 2] == "Age: ?")
+                {
+                    bool validEntry = false;
+                    int petAge;
+
+                    do
+                    {
+                        Console.WriteLine($"No age for {(ourAnimals[i, 0])}. Do you want to add their age? y/n");
+
+                        readResult = Console.ReadLine();
+                        if (readResult != null)
+                        {
+                            menuSelection = readResult;
+                            if (menuSelection == "n")
+                            {
+                                validEntry = true;
+                                continue;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Input age.");
+
+                                readResult = Console.ReadLine();
+                                if (readResult != null)
+                                {
+                                    animalAge = readResult;
+
+                                    if (ourAnimals[i, 2] == "Age: ?")
+                                    {
+                                        validEntry = int.TryParse(animalAge, out petAge);
+                                    }
+                                    else
+                                    {
+                                        validEntry = true;
+                                    }
+                                }
+                            }
+
+                            ourAnimals[i, 2] = "Age: " + animalAge;
+                        }
+                    } while (validEntry == false);
+                }
+            }
+            break;
+        case "6":
+            // Edit animals personality description
+            break;
+        case "7":
+            // Display all pets of certian species and physical description
+            break;
+        case "8":
             break;
         default:
             break;
