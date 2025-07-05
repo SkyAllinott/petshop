@@ -53,7 +53,7 @@ for (int i = 0; i < maxPets; i++)
             animalAge = "?";
             animalPhysicalDescription = "";
             animalPersonalityDescription = "";
-            animalNickname = "";
+            animalNickname = "?";
             break;
 
         default:
@@ -62,7 +62,7 @@ for (int i = 0; i < maxPets; i++)
             animalAge = "";
             animalPhysicalDescription = "";
             animalPersonalityDescription = "";
-            animalNickname = "";
+            animalNickname = "?";
             break;
     }
 
@@ -404,7 +404,6 @@ do
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
-
         case "5":
             // Edit animals age
             for (int i = 0; i < maxPets; i++)
@@ -458,6 +457,76 @@ do
                     } while (validEntry == false);
                 }
             }
+            Console.WriteLine();
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0] == "ID #: ")
+                {
+                    continue;
+                }
+                Console.WriteLine($"{(i + 1)}: {ourAnimals[i, 3]},  ({ourAnimals[i, 0]}) is {ourAnimals[i, 2].Replace("Age: ", "")} years old.");
+            }
+            Console.WriteLine();
+            
+            
+            int selectedRow = -1;
+            bool rowSelectionValid = false;
+
+            do
+            {
+                Console.WriteLine("Enter the row number of the animal whose age you wish to edit:");
+                readResult = Console.ReadLine();
+
+                if (readResult != null && int.TryParse(readResult, out selectedRow))
+                {
+                    if (selectedRow >= 1 && selectedRow <= maxPets && ourAnimals[selectedRow - 1, 0] != "ID #: ")
+                    {
+                        Console.WriteLine($"You selected row #{selectedRow}: {ourAnimals[selectedRow - 1, 3]}");
+                        rowSelectionValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid selection. Please enter a valid row number.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a numeric value.");
+                }
+            } while (!rowSelectionValid);
+
+            // Prompt the user to enter a new age
+            bool ageEntryValid = false;
+            string newAge = "";
+            int ageInt;
+
+            do
+            {
+                Console.WriteLine("Enter the new age (or '?' if unknown):");
+                readResult = Console.ReadLine();
+
+                if (readResult != null)
+                {
+                    newAge = readResult;
+                    if (newAge == "?")
+                    {
+                        ageEntryValid = true;
+                    }
+                    else
+                    {
+                        ageEntryValid = int.TryParse(newAge, out ageInt);
+                        if (!ageEntryValid)
+                        {
+                            Console.WriteLine("Please enter a valid number or '?'");
+                        }
+                    }
+                }
+            } while (!ageEntryValid);
+
+            // Update the age
+            ourAnimals[selectedRow - 1, 2] = "Age: " + newAge;
+            Console.WriteLine("Age updated successfully! Press Enter to continue.");
+            Console.ReadLine();
             break;
         case "6":
             // Edit animals personality description
