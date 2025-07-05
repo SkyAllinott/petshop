@@ -74,12 +74,13 @@ for (int i = 0; i < maxPets; i++)
     ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
 }
 
+// Menu
 do
 {
     Console.Clear();
 
     Console.WriteLine("Welcome to the Contoso PetFriends app. Your main menu options are:");
-    Console.WriteLine(" 1. List all of our current pet information");
+    Console.WriteLine(" 1. List al2 of our current pet information");
     Console.WriteLine(" 2. Add a new animal friend to the ourAnimals array");
     Console.WriteLine(" 3. Ensure animal ages and physical descriptions are complete");
     Console.WriteLine(" 4. Ensure animal nicknames and personality descriptions are complete");
@@ -206,7 +207,7 @@ do
                         if (animalPersonalityDescription == "")
                         {
                             animalPersonalityDescription = "tbd";
-                        } 
+                        }
                     }
                 } while (animalPersonalityDescription == "");
 
@@ -221,7 +222,7 @@ do
                         if (animalNickname == "")
                         {
                             animalNickname = "tbd";
-                        } 
+                        }
                     }
                 } while (animalNickname == "");
 
@@ -252,7 +253,7 @@ do
             {
                 Console.WriteLine("We have reached our limit on the number of pets that we can manage.");
                 Console.WriteLine("Press the Enter key to continue.");
-                readResult = Console.ReadLine();   
+                readResult = Console.ReadLine();
             }
 
 
@@ -472,8 +473,8 @@ do
                 Console.WriteLine($"{(i + 1)}: {ourAnimals[i, 3]},  ({ourAnimals[i, 0]}) is {ourAnimals[i, 2].Replace("Age: ", "")} years old.");
             }
             Console.WriteLine();
-            
-            
+
+
             int selectedRow = -1;
             bool rowSelectionValid = false;
 
@@ -595,22 +596,22 @@ do
                 Console.WriteLine($"{(i + 1)}: {ourAnimals[i, 3]}. {ourAnimals[i, 5]}");
             }
             Console.WriteLine();
-            
-            
-            int selectedRow6 = -1;
-            bool rowSelectionValid6 = false;
+
+
+            selectedRow = -1;
+            rowSelectionValid = false;
 
             do
             {
                 Console.WriteLine("Enter the row number of the animal whose personality you wish to edit:");
                 readResult = Console.ReadLine();
 
-                if (readResult != null && int.TryParse(readResult, out selectedRow6))
+                if (readResult != null && int.TryParse(readResult, out selectedRow))
                 {
-                    if (selectedRow6 >= 1 && selectedRow6 <= maxPets && ourAnimals[selectedRow6 - 1, 0] != "ID #: ")
+                    if (selectedRow >= 1 && selectedRow <= maxPets && ourAnimals[selectedRow - 1, 0] != "ID #: ")
                     {
-                        Console.WriteLine($"You selected row #{selectedRow6}: {ourAnimals[selectedRow6 - 1, 3]}");
-                        rowSelectionValid6 = true;
+                        Console.WriteLine($"You selected row #{selectedRow}: {ourAnimals[selectedRow - 1, 3]}");
+                        rowSelectionValid = true;
                     }
                     else
                     {
@@ -621,10 +622,9 @@ do
                 {
                     Console.WriteLine("Please enter a numeric value.");
                 }
-            } while (!rowSelectionValid6);
+            } while (!rowSelectionValid);
 
             bool personalityEntryValid = false;
-            string newPersonality = "";
 
             do
             {
@@ -633,12 +633,8 @@ do
 
                 if (readResult != null)
                 {
-                    newPersonality = readResult;
-                    if (newPersonality == "?")
-                    {
-                        personalityEntryValid = true;
-                    }
-                    else if (newPersonality.Length == 0)
+                    animalPersonalityDescription = readResult;
+                    if (animalPersonalityDescription.Length == 0)
                     {
                         Console.WriteLine("Must enter personality details.");
                     }
@@ -650,7 +646,7 @@ do
             } while (!personalityEntryValid);
 
             // Update the personality
-            ourAnimals[selectedRow6 - 1, 5] = "Personality: " + newPersonality;
+            ourAnimals[selectedRow - 1, 5] = "Personality: " + animalPersonalityDescription;
             Console.WriteLine("Personality updated successfully! Press Enter to continue.");
             Console.ReadLine();
             break;
@@ -658,7 +654,7 @@ do
             // Display all pets of certian species
             Console.Clear();
 
-            bool speciesValid = false;
+            bool entryValid = false;
             string speciesFilter = "";
 
             do
@@ -676,10 +672,10 @@ do
                     }
                     else
                     {
-                        speciesValid = true;
+                        entryValid = true;
                     }
                 }
-            } while (!speciesValid);
+            } while (!entryValid);
 
             Console.WriteLine();
             Console.Clear();
