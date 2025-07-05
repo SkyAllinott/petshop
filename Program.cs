@@ -85,7 +85,7 @@ do
     Console.WriteLine(" 4. Ensure animal nicknames and personality descriptions are complete");
     Console.WriteLine(" 5. Edit an animal’s age");
     Console.WriteLine(" 6. Edit an animal’s personality description");
-    Console.WriteLine(" 7. Display all pets of a certain species and physical description");
+    Console.WriteLine(" 7. Display all pets of a certain species");
     Console.WriteLine();
     Console.WriteLine("Enter your selection number (or type Exit to exit the program)");
 
@@ -104,6 +104,7 @@ do
     switch (menuSelection)
     {
         case "1":
+            Console.Clear();
             // List all of our current pet information
             for (int i = 0; i < maxPets; i++)
             {
@@ -125,6 +126,7 @@ do
             string anotherPet = "y";
             int petCount = 0;
 
+            Console.Clear();
             for (int i = 0; i < maxPets; i++)
             {
                 if (ourAnimals[i, 0] != "ID #: ")
@@ -257,6 +259,7 @@ do
 
             break;
         case "3":
+            Console.Clear();
             for (int i = 0; i < maxPets; i++)
             {
                 // Skip if ID is blank
@@ -332,6 +335,7 @@ do
             break;
         case "4":
             // Add menu to verify pet nickname and personality description, same as above essentially.
+            Console.Clear();
             for (int i = 0; i < maxPets; i++)
             {
                 // Skip if ID is blank
@@ -340,7 +344,7 @@ do
                     continue;
                 }
                 // Verify nickname
-                if (ourAnimals[i, 3] == "Nickname: " || ourAnimals[i, 3] == "Nickname: tbd")
+                if (ourAnimals[i, 3] == "Nickname: " || ourAnimals[i, 3] == "Nickname: tbd" || ourAnimals[i, 3] == "Nickname: ?")
                 {
                     bool validEntry = false;
                     do
@@ -406,6 +410,7 @@ do
             break;
         case "5":
             // Edit animals age
+            Console.Clear();
             for (int i = 0; i < maxPets; i++)
             {
                 // Skip if ID is blank
@@ -529,6 +534,7 @@ do
             break;
         case "6":
             // Edit animals personality description
+            Console.Clear();
             for (int i = 0; i < maxPets; i++)
             {
                 // Skip if ID is blank
@@ -649,7 +655,9 @@ do
             Console.ReadLine();
             break;
         case "7":
-            // Display all pets of certian species and physical description
+            // Display all pets of certian species
+            Console.Clear();
+
             bool speciesValid = false;
             string speciesFilter = "";
 
