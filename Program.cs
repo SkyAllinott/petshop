@@ -495,7 +495,6 @@ do
                 }
             } while (!rowSelectionValid);
 
-            // Prompt the user to enter a new age
             bool ageEntryValid = false;
             string newAge = "";
             int ageInt;
